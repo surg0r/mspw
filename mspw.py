@@ -89,11 +89,16 @@ img = Image.new( 'RGB', (1024,tot_h), "black")
 img_w, img_h = img.size
 font = ImageFont.truetype("Arial Bold.ttf",22)
 draw = ImageDraw.Draw(img)
-bg = Image.open("bg.jpg")
-img.paste(bg,(0,0))
 
 im, im_h, im_w = qrc(addr_multi)
 offset = (((img_w-im_w)-10), 0)
+
+bg = Image.open("bg.jpg")
+bg_w, bg_h = bg.size
+img.paste(bg, (0,0))
+if tot_h > bg_h:
+    img.paste(bg,(0,bg_h))
+
 img.paste(im, offset)
 
 draw.text((0, 0), 'Multisig paper wallet ' + str(mkeys) + ' - of - ' + str(nkeys) + ':', (255,255,255),font)
